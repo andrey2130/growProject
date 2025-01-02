@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "93384409144",
+    "project_id": "growproject-2d83d",
+    "storage_bucket": "growproject-2d83d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:93384409144:android:62db0b1cc71c1bd0cee6cd",
+        "android_client_info": {
+          "package_name": "com.example.growproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwsYRRf6i1b4pFrp5nsfaWjA4aTKz0xOY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
