@@ -1,70 +1,66 @@
 import 'package:flutter/material.dart';
 
-class CustomTextField extends StatefulWidget {
-  final TextInputType? keyboardType;
-  final bool isPassword; 
+class CustomTextFormField extends StatelessWidget {
+  final TextEditingController controller;
+  final bool obscureText;
+  final AutovalidateMode autovalidateMode;
+  final String? Function(String?) validator;
+  final VoidCallback? onSuffixTap;
+  final bool isSuffixVisible;
+  final bool hasError;
 
-  const CustomTextField({
-    super.key,
-    this.keyboardType,
-    this.isPassword = false,
-  });
-
-  @override
-  _CustomTextFieldState createState() => _CustomTextFieldState();
-}
-
-class _CustomTextFieldState extends State<CustomTextField> {
-  bool _isObscured = true;
+  const CustomTextFormField({
+    Key? key,
+    required this.controller,
+    this.obscureText = false,
+    this.autovalidateMode = AutovalidateMode.disabled,
+    required this.validator,
+    this.onSuffixTap,
+    this.isSuffixVisible = false,
+    this.hasError = false, // Add a hasError parameter
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: 8),
-        SizedBox(
-          width: 327,
-          height: 48,
-          child: TextFormField(
-            keyboardType: widget.keyboardType,
-            obscureText: widget.isPassword ? _isObscured : false,
-            decoration: kTextFieldDecoration.copyWith(
-              suffixIcon: widget.isPassword
-                  ? IconButton(
-                      icon: Icon(
-                        _isObscured ? Icons.visibility_off : Icons.visibility,
-                        color: Color(0xFF2F7302),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _isObscured = !_isObscured;
-                        });
-                      },
-                    )
-                  : null,
-            ),
+    return TextFormField(
+      controller: controller,
+      obscureText: obscureText,
+      autovalidateMode: autovalidateMode,
+      validator: validator,
+      decoration: InputDecoration(
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: hasError
+                ? Colors.red
+                : Color(0xFF2F7302), // Change color based on error
+            width: 1.0,
+          ),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(12),
           ),
         ),
-      ],
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: hasError
+                ? Colors.red
+                : Color(0xFF2F7302), // Change color based on error
+          ),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(12),
+          ),
+        ),
+        suffixIcon: isSuffixVisible
+            ? InkWell(
+                onTap: onSuffixTap,
+                child: Icon(
+                  obscureText
+                      ? Icons.visibility_off_outlined
+                      : Icons.visibility_outlined,
+                  color: Colors.green.shade800,
+                ),
+              )
+            : null,
+      ),
     );
   }
 }
-
-const kTextFieldDecoration = InputDecoration(
-  enabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(
-      color: Color(0xFF2F7302),
-      width: 1.0,
-    ),
-    borderRadius: BorderRadius.all(
-      Radius.circular(12),
-    ),
-  ),
-  focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Color(0xFF2F7302)),
-    borderRadius: BorderRadius.all(
-      Radius.circular(12),
-    ),
-  ),
-);
